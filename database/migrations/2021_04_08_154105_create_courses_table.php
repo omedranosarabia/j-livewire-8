@@ -26,7 +26,7 @@ class CreateCoursesTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('category_id')->references('id')->on('cateroies');
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 
@@ -37,6 +37,11 @@ class CreateCoursesTable extends Migration
      */
     public function down()
     {
+        Schema::table('courses', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropForeign(['category_id']);
+        });
+
         Schema::dropIfExists('courses');
     }
 }
